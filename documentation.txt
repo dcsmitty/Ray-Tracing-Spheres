@@ -1,0 +1,97 @@
+
+Phong Shader - 
+
+    For the phong shader, I used the equation to calculate phong
+along with the ambient, diffuse and specular coefficients.  I first looped through
+all of the lights in the world, and did all the rest of my calculations within this
+loop.  Inside the loop, I figured out the view ray, surface normal and the light
+ray.  After I calculated all of these Vector_3D's I set the colors ambient, diffuse,
+and specular components.  After I had the basis of my phong shading done, I then
+created a shadow ray that would check to see if the shadow ray intersected with 
+objects, creating shadows.  If it not a shadow, then add in the diffuse and specular.
+Lastly, after the light's loop finishes I return the color.
+
+
+Reflective Shader -
+
+    For the reflective shader, I first call the phong shader to actually draw the
+image to the screen, and all reflections.  I then need to create my reflection ray
+which needs to take in a endpoint and a direction.  For the endpoint, I used the 
+intersection point, and for the direction I used the ray direction.  I could not
+just use the direction, as that is not how reflections work, so I subrtracted it
+by its offset.  I also need to calculate the recursion depth so that it only goes to
+a certain depth and not past that point. Lastly, if the recursive depth is not at
+its limit, I make a recursive call casting the reflection ray to get the reflections,
+otherwise I return the color.
+
+
+Flat Shader -
+
+    Did not change.
+    
+    
+Sphere::Intersection - 
+
+    For the sphere intersection all I did was use the sphere intersection algorithm
+to find out if the ray hits the sphere.  If it does end up hitting the sphere, then
+you set t_max to that value, semi_infinite to false and a pointer to that sphere.
+
+
+Sphere::Normal -
+
+    All that I did for this function was take the location-center and return
+the normalized value.
+
+
+Plane::Intersection - 
+
+    For the plane intersection, I used the plane intersection formula to check 
+if the specified ray intersected the plane at all.  If an intersection exists,
+then set t_max to that value, semi_infinite to false and a pointer to that plane.
+
+
+Plane::Normal -
+
+    Did not change
+    
+
+World_Position - 
+
+    For the world position, I first need to take in a pixel index and feed it
+into the pixel grid to get the increment value.  I then will use the focal point,
+horizontal vector and vertical vector.  I need to multiply the corresponding increment
+values to the horizontal and vertaical vectors.
+
+
+Closest_Intersection - 
+
+    In order to find the closest intersection, I looped through the vector of 
+objects calling each one's intersection member function.  I also return the closest
+object.
+
+
+Render_Pixel - 
+
+    All I did in this function is initialize the ray.  For the endpoint I set it
+equal to the camera position, and for the direction I used World_position and subtracted
+the camera position from it.
+
+
+Cast_Ray - 
+
+    Cast ray calls the closes intersection function and uses that information to
+return the correct color.  If an intersection is found the color is obtained through
+Shade_Surface using the rays parameters to run, and if an interesection is not found
+then just return the background color.  If a interesection is found also specify the
+intersection point and the surface normal to pass into the Shade_Surface call.
+
+------------------------------------------------------------------------------
+Not Working
+------------------------------------------------------------------------------
+
+    I believe that I got all the features working, however my colors seemed a little 
+different then what was on the assingment page.  My render looked a bit brighter
+but overall very similar to the idea that looked like was going on. 
+
+    For the reflection's when I implemented the recursive limit call, im not sure
+if it worked 100% accurately.
